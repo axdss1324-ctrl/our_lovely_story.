@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>our lovely story 💜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
+        body{background:linear-gradient(135deg,#f5ecfc 0%,#ecd4f5 50%,#e2c2f0 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;color:#5a3d77;position:relative}
+        .bg-decorations{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+        .falling-item{position:absolute;top:-10%;font-size:20px;user-select:none;z-index:1;animation:fallAnimation linear infinite}
+        @keyframes fallAnimation{0%{transform:translateY(-20px) rotate(0deg);opacity:.8}100%{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+        .container{width:100%;max-width:450px;min-height:100vh;display:flex;flex-direction:column;align-items:center;position:relative;z-index:10}
+        #password-gate{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100vh;position:fixed;top:0;left:0;background:linear-gradient(135deg,#f5ecfc 0%,#e2c2f0 100%);z-index:2000;padding:20px;transition:opacity .8s ease;animation:bgPulse 1.5s infinite ease-in-out}
+        @keyframes bgPulse{0%,30%,60%,100%{background:linear-gradient(135deg,#f5ecfc 0%,#e2c2f0 100%)}15%,45%{background:linear-gradient(135deg,#faeafa 0%,#e8c6f7 100%)}}
+        .love-heart-card{background:#b17ad8;width:100%;max-width:360px;padding:40px 20px 30px;border-radius:180px 180px 60px 60px;display:flex;flex-direction:column;align-items:center;box-shadow:0 15px 35px rgba(138,75,175,.25);position:relative;border:2px solid rgba(255,255,255,.3);animation:heartbeat 1.5s infinite ease-in-out}
+        @keyframes heartbeat{0%,30%,60%,100%{transform:scale(1)}15%,45%{transform:scale(1.04)}}
+        .lock-profile-img,.profile-img{border-radius:50%;object-fit:cover}
+        .lock-profile-img{width:80px;height:80px;border:3px solid #fff;margin-bottom:15px;box-shadow:0 5px 15px rgba(0,0,0,.1)}
+        .lock-title{color:#fff;font-size:26px;font-weight:900;margin-bottom:4px}.lock-subtitle{color:rgba(255,255,255,.85);font-size:13px;margin-bottom:25px}
+        .password-input{width:85%;padding:12px 20px;border-radius:50px;border:none;background:#fff;color:#6a358c;font-size:15px;text-align:center;outline:none;box-shadow:0 4px 10px rgba(0,0,0,.05);margin-bottom:15px}
+        .password-input::placeholder{color:#cbb4e3}
+        .unlock-btn,.btn-yes{color:#fff;border:none;font-weight:700;cursor:pointer}
+        .unlock-btn{background:#9b51e0;border:2px solid rgba(255,255,255,.4);padding:12px 0;width:85%;font-size:16px;border-radius:50px;box-shadow:0 5px 15px rgba(155,81,224,.3);transition:transform .2s}
+        .unlock-btn:active,.btn-yes:active{transform:scale(.95)}
+        .error-msg{color:#ffe6e6;font-size:12px;margin-top:12px;font-weight:700;display:none;text-align:center}
+        #gate-section{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100vh;position:fixed;top:0;left:0;background:linear-gradient(135deg,#f3eafb 0%,#ecd4f5 100%);z-index:1000;padding:20px;transition:opacity .8s ease}
+        .question-box{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);padding:24px 18px;border-radius:20px;box-shadow:0 10px 30px rgba(138,75,175,.15);border:1px solid rgba(210,165,235,.5);width:100%;max-width:320px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+        #runaway-box{position:absolute;transition:all .25s ease-out;cursor:pointer;z-index:10}
+        .emoji-icon{font-size:35px}.question-text{color:#6a358c;font-size:18px;font-weight:700;white-space:nowrap}
+        .btn-yes{background:linear-gradient(135deg,#9b51e0,#803dcf);padding:10px 32px;font-size:16px;border-radius:50px;box-shadow:0 5px 15px rgba(155,81,224,.3);transition:transform .2s}
+        #transition-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;overflow:hidden;display:none}
+        .floral-svg-item{position:absolute;width:90px;height:90px;animation:slowFloralBurst 2.5s cubic-bezier(.25,1,.5,1) forwards}
+        @keyframes slowFloralBurst{0%{transform:scale(.1) rotate(0);opacity:0}30%,80%{opacity:1}100%{transform:scale(3.5) rotate(180deg);opacity:0}}
+        #main-content{display:none;flex-direction:column;align-items:center;width:100%;padding:30px 15px 110px;gap:10px;opacity:0;transform:translateY(20px);transition:opacity 1s ease,transform 1s ease}
+        #main-content.show{opacity:1;transform:translateY(0)}
+        .profile-container{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0 15px}.profile-img{width:100px;height:100px;border:3px solid #fff;box-shadow:0 5px 20px rgba(138,75,175,.3)}
+        .profile-title{font-size:22px;font-weight:900;color:#6a358c;display:flex;align-items:center;gap:5px}.profile-subtitle{font-size:12px;color:#8c5aa8;opacity:.9}
+        .card-box,.scratch-section,.heart-interactive-section{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);width:100%;box-shadow:0 8px 25px rgba(138,75,175,.1);border:1px solid rgba(210,165,235,.4)}
+        .card-box{border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;text-align:center;margin-bottom:25px}
+        .counter-title-header{font-size:16px;font-weight:800;color:#6a358c;margin-bottom:4px}.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+        .counter-item{background:#9b51e0;color:#fff;padding:10px 4px;border-radius:14px;box-shadow:0 4px 10px rgba(155,81,224,.3)}.counter-num{font-size:16px;font-weight:900}.counter-lbl{font-size:10px;opacity:.95;margin-top:2px}
+        .sub-message{background:#f5ebfc;padding:10px;border-radius:12px;font-size:12px;color:#6a358c;border:1px solid #e0c2f5}
+        .hanging-gallery{position:relative;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:15px}.hanging-gallery:before{content:'';position:absolute;top:0;bottom:0;width:2px;background:repeating-linear-gradient(to bottom,#b977f2,#b977f2 6px,transparent 6px,transparent 12px);z-index:1;opacity:.6}
+        .polaroid-wrapper{position:relative;z-index:3;margin-bottom:35px;display:flex;flex-direction:column;align-items:center}.clip{position:absolute;top:-14px;width:18px;height:24px;background:linear-gradient(135deg,#b977f2,#803dcf);border-radius:4px;z-index:5;box-shadow:0 3px 6px rgba(0,0,0,.15)}.clip:after{content:'';position:absolute;top:4px;left:3px;right:3px;height:4px;background:rgba(255,255,255,.6);border-radius:2px}
+        .polaroid-card{background:#fff;padding:12px 12px 18px;border-radius:8px;box-shadow:0 10px 25px rgba(138,75,175,.15);width:310px;display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid #f0e1ff;transform:rotate(-.5deg)}.polaroid-card img{width:100%;height:290px;object-fit:cover;border-radius:4px}.polaroid-caption{font-size:13px;font-weight:700;color:#6a358c;text-align:center}
+        .scratch-section{border-radius:20px;padding:18px;text-align:center;display:flex;flex-direction:column;align-items:center;margin-top:10px}.scratch-title{font-size:15px;font-weight:700;color:#6a358c;margin-bottom:10px}.scratch-box{position:relative;width:100%;min-height:200px;border-radius:16px;overflow:hidden;box-shadow:inset 0 4px 10px rgba(0,0,0,.05);border:1px solid #e0c2f5}.scratch-message-bg{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center}.hidden-text{font-size:13px;font-weight:700;color:#9b51e0;line-height:1.6}#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none}
+        .heart-interactive-section{border-radius:20px;padding:20px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px}.section-main-title{font-size:15px;font-weight:700;color:#6a358c}.interactive-heart{font-size:45px;cursor:pointer;user-select:none;transition:transform .15s ease;filter:drop-shadow(0 4px 8px rgba(155,81,224,.3))}.interactive-heart:active{transform:scale(1.25)}
+        .progress-bar-container{width:100%;background:#f0e1ff;border-radius:50px;height:10px;overflow:hidden}.progress-bar-fill{height:100%;width:0;background:linear-gradient(90deg,#b977f2,#9b51e0);border-radius:50px;transition:width .3s ease}.progress-status-text{font-size:13px;font-weight:700;color:#8c5aa8}
+        .music-bar{position:fixed;bottom:12px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:8px 16px;border-radius:50px;box-shadow:0 5px 20px rgba(0,0,0,.1);display:flex;align-items:center;gap:10px;z-index:100;border:1px solid #e0c2f5;width:92%;max-width:390px;justify-content:space-between}.music-info{font-size:11px;font-weight:700;color:#6a358c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}.music-controls{display:flex;align-items:center;gap:6px}.music-btn{background:#9b51e0;color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 3px 8px rgba(155,81,224,.3)}
+    </style>
+</head>
+<body>
+<div class="bg-decorations" id="bgDecorations"></div>
+<div class="container">
+<div id="password-gate"><div class="love-heart-card">
+<img src="https://i.ibb.co/2BXjwwJ/2BXjwwJ.jpg" class="lock-profile-img" alt="Profile">
+<div class="lock-title">جاهزه؟؟</div><div class="lock-subtitle">my everything</div>
+<input type="text" id="passInput" class="password-input" placeholder="اكتبي كلمة السر">
+<button class="unlock-btn" onclick="checkPassword()">Unlock</button><div class="error-msg" id="errorMsg">انتي مش إسراء الحقيقية 😒</div>
+</div></div>
+
+<div id="gate-section">
+<div class="question-box" id="runaway-box" onmouseover="flyRandomly()" ontouchstart="flyRandomly()" onclick="flyRandomly()"><div class="emoji-icon" id="no-emoji">😒</div><div class="question-text">مش بتحبيني؟</div></div>
+<div class="question-box"><div class="emoji-icon">❤️</div><div class="question-text"></div><button class="btn-yes" onclick="showMainContent()">بتحبيني؟</button></div>
+</div>
+<div id="transition-overlay"></div>
+
+<div id="main-content">
+<div class="profile-container"><img src="https://i.ibb.co/2BXjwwJ/2BXjwwJ.jpg" class="profile-img" alt="Profile"><div class="profile-title">يروح قلبي ❤</div><div class="profile-subtitle">الهديه دي ليكي وبس ونفضل نضيف كل الي بينا هنا</div></div>
+<div class="card-box"><div class="counter-title-header">⏳ بدايتنا ⏳</div><div class="counter-grid">
+<div class="counter-item"><div class="counter-num" id="days">0</div><div class="counter-lbl">يوم</div></div>
+<div class="counter-item"><div class="counter-num" id="hours">0</div><div class="counter-lbl">ساعة</div></div>
+<div class="counter-item"><div class="counter-num" id="minutes">0</div><div class="counter-lbl">دقيقة</div></div>
+<div class="counter-item"><div class="counter-num" id="seconds">0</div><div class="counter-lbl">ثانية</div></div></div>
+<div class="sub-message">✨ لكل يوم في حبك معنى.. وربنا يديمك ليا عمر</div></div>
+
+<div class="hanging-gallery">
+<div class="polaroid-wrapper"><div class="clip"></div><div class="polaroid-card"><img src="https://i.ibb.co/9mPhJdwF/1000004289.jpg" alt="Memory"><div class="polaroid-caption">أول ضحكة كنا فيها سوا 🥰</div></div></div>
+<div class="polaroid-wrapper"><div class="clip"></div><div class="polaroid-card"><img src="https://i.ibb.co/9kZVNKpy/1000004290.jpg" alt="Memory"><div class="polaroid-caption">أحلى صدفة وأجمل أيام عمري 🌸</div></div></div>
+<div class="polaroid-wrapper"><div class="clip"></div><div class="polaroid-card"><img src="https://i.ibb.co/r2DhqCf3/1000004291.jpg" alt="Memory"><div class="polaroid-caption">معاكِ بتبتدي حكايات الفرح 💜</div></div></div>
+<div class="polaroid-wrapper"><div class="clip"></div><div class="polaroid-card"><img src="https://i.ibb.co/ymKDvwxm/1000004292.jpg" alt="Memory"><div class="polaroid-caption">أيامنا الحلوة وضحكتك اللي بتنسيني الدنيا ✨</div></div></div>
+<div class="polaroid-wrapper"><div class="clip"></div><div class="polaroid-card"><img src="https://i.ibb.co/1GLQkMt6/1000004293.jpg" alt="Memory"><div class="polaroid-caption">ربنا يخليكيكي ليا وما تحرمنيش منك ابداً ♾</div></div></div>
+</div>
+
+<div class="scratch-section"><div class="scratch-title">💌</div><div class="scratch-box"><div class="scratch-message-bg"><div class="hidden-text">يروح قلبيي❤<br>انا عملت الهديه دي علشان عايز اقولك اني بحبك انا بحب كلامنا سوا هزرنا وكل حاجه بينا بحب كلامك ليا بحب كل حاجه فيكي مهما ما اوصفلك انا بحبك قد ايه مش هخلص بس الي اعرفه انك غاليه عندي واني بحبك وعايزين نملاه صورنا بقا ده لينا احنا وبس بحبككك وربنا يخليكي ليا❤️</div></div><canvas id="scratchCanvas"></canvas></div></div>
+<div class="heart-interactive-section"><div class="section-main-title">عايزه تعرفي بحبك قد ايه؟</div><div class="interactive-heart" onclick="handleHeartClick()">💜</div><div class="progress-bar-container"><div class="progress-bar-fill" id="progressBar"></div></div><div class="progress-status-text" id="progressText">اضغطي على القلب عشان تعرفي 🥺❤️</div></div>
+</div>
+<div class="music-bar" id="musicBar" style="display:none"><div class="music-info" id="songTitle">🎵 الأغنية الأولى</div><div class="music-controls"><button class="music-btn" onclick="prevSong()">⏮</button><button class="music-btn" id="playPauseBtn" onclick="toggleMusic()">⏸</button><button class="music-btn" onclick="nextSong()">⏭</button></div></div>
+</div>
+<audio id="bgMusic" crossorigin="anonymous"></audio>
+
+<script>
+const fallingSymbols=["🦋","💜","💖","✨","🌸","🤍"],bgDecorations=document.getElementById('bgDecorations');
+for(let i=0;i<20;i++){const item=document.createElement('div');item.className='falling-item';item.innerText=fallingSymbols[Math.floor(Math.random()*fallingSymbols.length)];item.style.left=Math.random()*100+'vw';item.style.animationDuration=(Math.random()*5+5)+'s';item.style.animationDelay=Math.random()*5+'s';item.style.fontSize=(Math.random()*14+14)+'px';bgDecorations.appendChild(item)}
+function checkPassword(){const val=document.getElementById('passInput').value.trim().toLowerCase(),errorMsg=document.getElementById('errorMsg');if(val==="love"){const gate=document.getElementById('password-gate');gate.style.opacity='0';setTimeout(()=>{gate.style.display='none';document.getElementById('gate-section').style.display='flex'},800)}else errorMsg.style.display='block'}
+let scaleSize=1,emojis=["😒","🥺","🤨","😡","😭","💔","🙄"],emojiIndex=0;
+function flyRandomly(){const box=document.getElementById('runaway-box'),emojiEl=document.getElementById('no-emoji');scaleSize-=.15;if(scaleSize<=.1){box.style.display='none';return}emojiIndex=(emojiIndex+1)%emojis.length;emojiEl.innerText=emojis[emojiIndex];box.style.transform=`translate(${(Math.random()-.5)*220}px,${(Math.random()-.5)*280}px) scale(${scaleSize})`}
+function showMainContent(){const gate=document.getElementById('gate-section'),overlay=document.getElementById('transition-overlay');overlay.style.display='block';const flowerSvgs=[`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="#fff5ee"/><path d="M50 15 C40 5,20 20,30 35 C15 35,10 55,30 60 C20 75,40 90,50 75 C60 90,80 75,70 60 C90 55,85 35,70 35 C80 20,60 5,50 15Z" fill="#ffb6c1"/><circle cx="50" cy="50" r="12" fill="#db7093"/></svg>`,`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="#fdf5e6"/><path d="M50 10 C35 5,15 25,35 45 C15 50,20 75,45 70 C45 90,70 85,65 65 C85 70,90 45,70 40 C85 25,65 5,50 10Z" fill="#db7093"/><circle cx="50" cy="50" r="10" fill="#ff69b4"/></svg>`,`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="#fff0f5"/><path d="M50 5 C30 5,10 30,35 50 C10 65,30 90,50 75 C70 90,90 65,65 50 C90 30,70 5,50 5Z" fill="#ffc0cb"/><circle cx="50" cy="50" r="14" fill="#b76e79"/></svg>`];for(let i=0;i<50;i++){const d=document.createElement('div');d.className='floral-svg-item';d.innerHTML=flowerSvgs[Math.floor(Math.random()*flowerSvgs.length)];d.style.left=Math.random()*(innerWidth-80)+'px';d.style.top=Math.random()*(innerHeight-80)+'px';d.style.animationDelay=Math.random()*.8+'s';overlay.appendChild(d)}loadSong(currentSongIndex);music.play().then(()=>{isPlaying=true;document.getElementById('playPauseBtn').innerText="⏸"}).catch(()=>{});setTimeout(()=>gate.style.opacity='0',1200);setTimeout(()=>{gate.style.display='none';overlay.style.display='none';const main=document.getElementById('main-content');main.style.display='flex';setTimeout(()=>{main.classList.add('show');initScratchCard()},50);document.getElementById('musicBar').style.display='flex';startCounter()},2300)}
+function initScratchCard(){const canvas=document.getElementById('scratchCanvas'),ctx=canvas.getContext('2d');canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;ctx.fillStyle='#9b51e0';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#b977f2';ctx.font='14px Cairo';ctx.textAlign='center';ctx.fillText('✨ خربشي هنا لإظهار الرسالة ✨',canvas.width/2,canvas.height/2);ctx.globalCompositeOperation='destination-out';let drawing=false;function scratch(e){if(!drawing)return;const r=canvas.getBoundingClientRect(),x=(e.clientX??e.touches?.[0]?.clientX)-r.left,y=(e.clientY??e.touches?.[0]?.clientY)-r.top;if(x==null||y==null)return;ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill()}canvas.addEventListener('mousedown',()=>drawing=true);canvas.addEventListener('mousemove',scratch);window.addEventListener('mouseup',()=>drawing=false);canvas.addEventListener('touchstart',e=>{drawing=true;scratch(e)});canvas.addEventListener('touchmove',scratch);window.addEventListener('touchend',()=>drawing=false)}
+let clickProgress=0;const loveMessages=[{text:"اضغطي على القلب عشان تعرفي 🥺❤️",progress:0},{text:"بحبك شويه.. 🥺💛",progress:12},{text:"بحبك أكتر كل ما بتعدي دقيقة.. 🥰💗",progress:25},{text:"ده إنتِ النبض لجوه روحي ✨",progress:38},{text:"بحبك قد الدنيا بحالها يا عيوني! 🌍💜",progress:50},{text:"بحبك بعدد كل إنسان ماشي على الأرض 🥰",progress:62},{text:"عشقي ليكِ ملوش حدود ولا نهاية ♾️",progress:75},{text:"أنتِ الحب كله وفرحة عمري الجاي 🌸",progress:88},{text:"وهفضل أحبك لأخر يوم في عمري يا توأم روحي 💍💜",progress:100}];
+function handleHeartClick(){clickProgress=clickProgress<loveMessages.length-1?clickProgress+1:1;const d=loveMessages[clickProgress];document.getElementById('progressBar').style.width=d.progress+'%';document.getElementById('progressText').innerText=d.text}
+const startDate=new Date("2026-03-26T00:00:00");
+function startCounter(){setInterval(()=>{const diff=new Date()-startDate;document.getElementById('days').innerText=Math.floor(diff/86400000);document.getElementById('hours').innerText=Math.floor(diff/3600000)%24;document.getElementById('minutes').innerText=Math.floor(diff/60000)%60;document.getElementById('seconds').innerText=Math.floor(diff/1000)%60},1000)}
+const songs=[{title:"🎵 الأغنية الأولى 💜",url:"https://files.catbox.moe/2s4qe9.mp3"},{title:"🎵 الأغنية الثانية ✨",url:"https://files.catbox.moe/c1pu0t.mp3"}];let currentSongIndex=0,isPlaying=false;const music=document.getElementById('bgMusic');
+function loadSong(i){music.src=songs[i].url;document.getElementById('songTitle').innerText=songs[i].title;music.load()}
+function toggleMusic(){if(isPlaying){music.pause();document.getElementById('playPauseBtn').innerText="▶";isPlaying=false}else music.play().then(()=>{document.getElementById('playPauseBtn').innerText="⏸";isPlaying=true}).catch(()=>{})}
+function nextSong(){currentSongIndex=(currentSongIndex+1)%songs.length;loadSong(currentSongIndex);music.play().then(()=>{document.getElementById('playPauseBtn').innerText="⏸";isPlaying=true}).catch(()=>{})}
+function prevSong(){currentSongIndex=(currentSongIndex-1+songs.length)%songs.length;loadSong(currentSongIndex);music.play().then(()=>{document.getElementById('playPauseBtn').innerText="⏸";isPlaying=true}).catch(()=>{})}
+music.addEventListener('ended',nextSong);
+</script>
+</body>
+</html>
